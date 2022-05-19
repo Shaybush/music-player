@@ -41,10 +41,10 @@ const Player = ({
   const playSongHandler = () => {
     if (isPlaying) {
       audioRef.current.pause();
-      setIsPlaying(!isPlaying);
+      setIsPlaying(! isPlaying);
     } else {
       audioRef.current.play();
-      setIsPlaying(!isPlaying);
+      setIsPlaying(! isPlaying);
     }
   };
   // make the time easy to read from stack-overflow
