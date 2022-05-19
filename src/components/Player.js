@@ -60,22 +60,24 @@ const Player = ({
     setSongInfo({ ...songInfo, currentTime: e.target.value });
   };
   //button direction forward or back
-  const skipTrackHandler =(dir) =>{
+  const skipTrackHandler =async(dir) =>{
     //find the index of the song
     let currentIndex =songs.findIndex((song) => song.id ===currentSong.id);
     if(dir === "skip-back")
     {
       if((currentIndex -1) % songs.length === -1){
-        setCurrentSong(songs[songs.length-1])
+         await setCurrentSong(songs[songs.length-1])
+        if(isPlaying) audioRef.current.play();
         //The return make sure the second setCurrentSong we'll not append
         return;
       }
-      setCurrentSong(songs[(currentIndex - 1)% songs.length])
+      await setCurrentSong(songs[(currentIndex - 1)% songs.length])
     }
     //skip forward
     else{
-      setCurrentSong(songs[(currentIndex + 1) % songs.length])
+      await setCurrentSong(songs[(currentIndex + 1) % songs.length])
     }
+    if(isPlaying) audioRef.current.play();
   }
 
   return (
@@ -90,7 +92,7 @@ const Player = ({
           value={songInfo.currentTime}
           type="range"
         />
-        <p>{getTime(songInfo.duration)}</p>
+        <p>{songInfo.duration ? getTime(songInfo.duration) : '0:00'}</p>
       </div>
       <div className="play-control">
         <FontAwesomeIcon onClick={() => skipTrackHandler("skip-back")} size="2x" className="skip-back" icon={faAngleLeft} />

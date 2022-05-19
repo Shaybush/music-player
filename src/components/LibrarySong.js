@@ -7,7 +7,7 @@ const LibrarySong = ({
   isPlaying,
   setSongs,
 }) => {
-  const songSelectHandler = () => {
+  const songSelectHandler = async() => {
     //return array
     //const selectedSong = songs.filter(stateSong => stateSong.id === song.id);
 
@@ -15,7 +15,7 @@ const LibrarySong = ({
     //setCurrentSong(selectedSong[0]);
 
     //better way
-    setCurrentSong(song);
+    await setCurrentSong(song);
 
     const newSongs = songs.map((s) => {
       if (s.id === song.id) {
@@ -33,7 +33,7 @@ const LibrarySong = ({
     setSongs(newSongs);
     //The song must play while we setup the current song
     //check if the song even playing and if its playing the second if fix the delay thing
-
+    if(isPlaying) audioRef.current.play();
   };
   return (
     <div
